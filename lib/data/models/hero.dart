@@ -40,10 +40,14 @@ class Hero {
     required this.images,
   });
 
+  // FÁBRICA DO 'HERO' ATUALIZADA
   factory Hero.fromJson(Map<String, dynamic> json) => Hero(
-    id: json["id"],
-    name: json["name"],
-    slug: json["slug"],
+    // Correção para 'id' (que já fizemos)
+    id: int.tryParse(json["id"].toString()) ?? 0,
+    // Correção para Strings nulas
+    name: json["name"] as String? ?? 'Nome Desconhecido',
+    slug: json["slug"] as String? ?? '',
+    // As classes filhas agora também serão corrigidas
     powerstats: Powerstats.fromJson(json["powerstats"]),
     appearance: Appearance.fromJson(json["appearance"]),
     biography: Biography.fromJson(json["biography"]),
@@ -89,13 +93,15 @@ class Appearance {
     required this.hairColor,
   });
 
+  // FÁBRICA 'APPEARANCE' ATUALIZADA
   factory Appearance.fromJson(Map<String, dynamic> json) => Appearance(
-    gender: json["gender"],
-    race: json["race"],
-    height: List<String>.from(json["height"].map((x) => x)),
-    weight: List<String>.from(json["weight"].map((x) => x)),
-    eyeColor: json["eyeColor"],
-    hairColor: json["hairColor"],
+    gender: json["gender"] as String? ?? 'N/A',
+    race: json["race"] as String? ?? 'N/A',
+    // Correção para Listas nulas
+    height: List<String>.from(json["height"]?.map((x) => x) ?? []),
+    weight: List<String>.from(json["weight"]?.map((x) => x) ?? []),
+    eyeColor: json["eyeColor"] as String? ?? 'N/A',
+    hairColor: json["hairColor"] as String? ?? 'N/A',
   );
 
   Map<String, dynamic> toJson() => {
@@ -135,14 +141,15 @@ class Biography {
     required this.alignment,
   });
 
+  // FÁBRICA 'BIOGRAPHY' ATUALIZADA
   factory Biography.fromJson(Map<String, dynamic> json) => Biography(
-    fullName: json["fullName"],
-    alterEgos: json["alterEgos"],
-    aliases: List<String>.from(json["aliases"].map((x) => x)),
-    placeOfBirth: json["placeOfBirth"],
-    firstAppearance: json["firstAppearance"],
-    publisher: json["publisher"],
-    alignment: json["alignment"],
+    fullName: json["fullName"] as String? ?? '',
+    alterEgos: json["alterEgos"] as String? ?? 'N/A',
+    aliases: List<String>.from(json["aliases"]?.map((x) => x) ?? []),
+    placeOfBirth: json["placeOfBirth"] as String? ?? 'N/A',
+    firstAppearance: json["firstAppearance"] as String? ?? 'N/A',
+    publisher: json["publisher"] as String? ?? 'N/A',
+    alignment: json["alignment"] as String? ?? 'N/A',
   );
 
   Map<String, dynamic> toJson() => {
@@ -168,9 +175,10 @@ class Connections {
     required this.relatives,
   });
 
+  // FÁBRICA 'CONNECTIONS' ATUALIZADA
   factory Connections.fromJson(Map<String, dynamic> json) => Connections(
-    groupAffiliation: json["groupAffiliation"],
-    relatives: json["relatives"],
+    groupAffiliation: json["groupAffiliation"] as String? ?? 'N/A',
+    relatives: json["relatives"] as String? ?? 'N/A',
   );
 
   Map<String, dynamic> toJson() => {
@@ -197,11 +205,15 @@ class Images {
     required this.lg,
   });
 
+  // URL Padrão caso a imagem não exista
+  static const String _placeholder = 'https://via.placeholder.com/150';
+
+  // FÁBRICA 'IMAGES' ATUALIZADA
   factory Images.fromJson(Map<String, dynamic> json) => Images(
-    xs: json["xs"],
-    sm: json["sm"],
-    md: json["md"],
-    lg: json["lg"],
+    xs: json["xs"] as String? ?? _placeholder,
+    sm: json["sm"] as String? ?? _placeholder,
+    md: json["md"] as String? ?? _placeholder,
+    lg: json["lg"] as String? ?? _placeholder,
   );
 
   Map<String, dynamic> toJson() => {
@@ -236,13 +248,14 @@ class Powerstats {
     required this.combat,
   });
 
+  // FÁBRICA 'POWERSTATS' ATUALIZADA (que já fizemos)
   factory Powerstats.fromJson(Map<String, dynamic> json) => Powerstats(
-    intelligence: json["intelligence"],
-    strength: json["strength"],
-    speed: json["speed"],
-    durability: json["durability"],
-    power: json["power"],
-    combat: json["combat"],
+    intelligence: int.tryParse(json["intelligence"].toString()) ?? 0,
+    strength: int.tryParse(json["strength"].toString()) ?? 0,
+    speed: int.tryParse(json["speed"].toString()) ?? 0,
+    durability: int.tryParse(json["durability"].toString()) ?? 0,
+    power: int.tryParse(json["power"].toString()) ?? 0,
+    combat: int.tryParse(json["combat"].toString()) ?? 0,
   );
 
   Map<String, dynamic> toJson() => {
@@ -267,9 +280,10 @@ class Work {
     required this.base,
   });
 
+  // FÁBRICA 'WORK' ATUALIZADA
   factory Work.fromJson(Map<String, dynamic> json) => Work(
-    occupation: json["occupation"],
-    base: json["base"],
+    occupation: json["occupation"] as String? ?? 'N/A',
+    base: json["base"] as String? ?? 'N/A',
   );
 
   Map<String, dynamic> toJson() => {

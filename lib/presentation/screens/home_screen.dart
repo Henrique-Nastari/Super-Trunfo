@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:super_trunfo/presentation/screens/herois_screen.dart';
+import 'package:super_trunfo/presentation/screens/card_diario_screen.dart';
+import 'package:super_trunfo/presentation/screens/minhas_cartas_screen.dart';
+import 'package:super_trunfo/presentation/screens/batalhar_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -29,7 +33,10 @@ class HomeScreen extends StatelessWidget {
                 textStyle: textTheme.titleMedium, // Estilo do M3
               ),
               onPressed: () {
-                // TODO: Navegar para a tela de Heróis
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const HeroisScreen()),
+                );
               },
               child: const Text('Heróis'),
             ),
@@ -42,7 +49,10 @@ class HomeScreen extends StatelessWidget {
                 textStyle: textTheme.titleMedium,
               ),
               onPressed: () {
-                // TODO: Navegar para a tela Card Diário
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const CardDiarioScreen()),
+                );
               },
               child: const Text('Card Diário'),
             ),
@@ -55,20 +65,26 @@ class HomeScreen extends StatelessWidget {
                 textStyle: textTheme.titleMedium,
               ),
               onPressed: () {
-                // TODO: Navegar para a tela Minhas Cartas
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const MinhasCartasScreen()),
+                );
               },
               child: const Text('Minhas Cartas'),
             ),
             const SizedBox(height: 20),
 
-            // Botão 4: Batalhar (Usei FilledButton para dar mais destaque)
+            // Botão 4: Batalhar
             FilledButton(
               style: FilledButton.styleFrom(
                 padding: const EdgeInsets.symmetric(vertical: 16.0),
                 textStyle: textTheme.titleMedium,
               ),
               onPressed: () {
-                // TODO: Navegar para a tela Batalhar
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const BatalharScreen()),
+                );
               },
               child: const Text('Batalhar'),
             ),
