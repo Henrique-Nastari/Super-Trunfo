@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart' hide Hero;
 import 'package:super_trunfo/data/models/hero.dart';
-import 'package:super_trunfo/data/repositories/my_cards_repository.dart'; // Nosso repositório
+import 'package:super_trunfo/data/repositories/my_cards_repository.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:primer_progress_bar/primer_progress_bar.dart';
-import 'package:awesome_dialog/awesome_dialog.dart'; // A nova biblioteca
+import 'package:awesome_dialog/awesome_dialog.dart';
 
 class MinhaCartaDetailScreen extends StatelessWidget {
   final Hero hero;
   const MinhaCartaDetailScreen({super.key, required this.hero});
 
-  // Método para mostrar o diálogo de confirmação (REQUISITO)
+  // Metodo para mostrar o diálogo de confirmação
   void _showConfirmationDialog(BuildContext context) {
     AwesomeDialog(
       context: context,
@@ -26,7 +26,7 @@ class MinhaCartaDetailScreen extends StatelessWidget {
         myCardsRepo.removeCard(hero.id);
 
         // 2. Fecha a tela de detalhes e "avisa" a tela anterior
-        // que a remoção foi sucedida (passando 'true')
+        // que a remoção foi sucedida
         Navigator.pop(context, true);
       },
     ).show();
@@ -42,8 +42,6 @@ class MinhaCartaDetailScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            // --- A PARTIR DAQUI, É IDÊNTICO AO 'HeroDetailScreen' ---
-
             // Imagem em Alta Resolução
             CachedNetworkImage(
               imageUrl: hero.images.lg,
@@ -105,8 +103,6 @@ class MinhaCartaDetailScreen extends StatelessWidget {
               ),
             ),
 
-            // --- A SEÇÃO NOVA E DIFERENTE COMEÇA AQUI ---
-
             // Botão "Abandonar" (REQUISITO)
             Padding(
               padding: const EdgeInsets.fromLTRB(16, 24, 16, 24),
@@ -128,8 +124,6 @@ class MinhaCartaDetailScreen extends StatelessWidget {
       ),
     );
   }
-
-  // --- O RESTO SÃO OS MÉTODOS AUXILIARES IDÊNTICOS ---
 
   Widget _buildSectionCard({required String title, required Widget content}) {
     return Padding(

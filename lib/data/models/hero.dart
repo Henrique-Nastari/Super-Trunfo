@@ -40,14 +40,10 @@ class Hero {
     required this.images,
   });
 
-  // FÁBRICA DO 'HERO' ATUALIZADA
   factory Hero.fromJson(Map<String, dynamic> json) => Hero(
-    // Correção para 'id' (que já fizemos)
     id: int.tryParse(json["id"].toString()) ?? 0,
-    // Correção para Strings nulas
     name: json["name"] as String? ?? 'Nome Desconhecido',
     slug: json["slug"] as String? ?? '',
-    // As classes filhas agora também serão corrigidas
     powerstats: Powerstats.fromJson(json["powerstats"]),
     appearance: Appearance.fromJson(json["appearance"]),
     biography: Biography.fromJson(json["biography"]),
@@ -93,11 +89,9 @@ class Appearance {
     required this.hairColor,
   });
 
-  // FÁBRICA 'APPEARANCE' ATUALIZADA
   factory Appearance.fromJson(Map<String, dynamic> json) => Appearance(
     gender: json["gender"] as String? ?? 'N/A',
     race: json["race"] as String? ?? 'N/A',
-    // Correção para Listas nulas
     height: List<String>.from(json["height"]?.map((x) => x) ?? []),
     weight: List<String>.from(json["weight"]?.map((x) => x) ?? []),
     eyeColor: json["eyeColor"] as String? ?? 'N/A',
@@ -141,7 +135,6 @@ class Biography {
     required this.alignment,
   });
 
-  // FÁBRICA 'BIOGRAPHY' ATUALIZADA
   factory Biography.fromJson(Map<String, dynamic> json) => Biography(
     fullName: json["fullName"] as String? ?? '',
     alterEgos: json["alterEgos"] as String? ?? 'N/A',
@@ -175,7 +168,6 @@ class Connections {
     required this.relatives,
   });
 
-  // FÁBRICA 'CONNECTIONS' ATUALIZADA
   factory Connections.fromJson(Map<String, dynamic> json) => Connections(
     groupAffiliation: json["groupAffiliation"] as String? ?? 'N/A',
     relatives: json["relatives"] as String? ?? 'N/A',
@@ -208,7 +200,6 @@ class Images {
   // URL Padrão caso a imagem não exista
   static const String _placeholder = 'https://via.placeholder.com/150';
 
-  // FÁBRICA 'IMAGES' ATUALIZADA
   factory Images.fromJson(Map<String, dynamic> json) => Images(
     xs: json["xs"] as String? ?? _placeholder,
     sm: json["sm"] as String? ?? _placeholder,
@@ -248,7 +239,6 @@ class Powerstats {
     required this.combat,
   });
 
-  // FÁBRICA 'POWERSTATS' ATUALIZADA (que já fizemos)
   factory Powerstats.fromJson(Map<String, dynamic> json) => Powerstats(
     intelligence: int.tryParse(json["intelligence"].toString()) ?? 0,
     strength: int.tryParse(json["strength"].toString()) ?? 0,
@@ -280,7 +270,6 @@ class Work {
     required this.base,
   });
 
-  // FÁBRICA 'WORK' ATUALIZADA
   factory Work.fromJson(Map<String, dynamic> json) => Work(
     occupation: json["occupation"] as String? ?? 'N/A',
     base: json["base"] as String? ?? 'N/A',

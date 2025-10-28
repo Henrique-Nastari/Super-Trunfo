@@ -2,7 +2,6 @@ import 'package:flutter/material.dart' hide Hero;
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:super_trunfo/data/models/hero.dart';
 import 'package:super_trunfo/data/repositories/my_cards_repository.dart';
-// 1. IMPORTAR A NOVA TELA DE DETALHES
 import 'package:super_trunfo/presentation/screens/minha_carta_detail_screen.dart';
 
 class MinhasCartasScreen extends StatefulWidget {
@@ -22,7 +21,7 @@ class _MinhasCartasScreenState extends State<MinhasCartasScreen> {
     _loadCards();
   }
 
-  // 2. SEPARAMOS A LÓGICA DE CARREGAMENTO NESTE MÉTODO
+  // 2. SEPARAR A LÓGICA DE CARREGAMENTO NESTE METODO
   //    PARA PODERMOS CHAMÁ-LO NOVAMENTE QUANDO UMA CARTA FOR DELETADA
   void _loadCards() {
     setState(() {
@@ -81,7 +80,6 @@ class _MinhasCartasScreenState extends State<MinhasCartasScreen> {
       clipBehavior: Clip.antiAlias,
       elevation: 4,
       child: InkWell(
-        // 3. ATUALIZAÇÃO DA LÓGICA 'onTap'
         onTap: () async {
           // Navega para a tela de detalhes e ESPERA ELA FECHAR
           final result = await Navigator.push(
@@ -91,8 +89,7 @@ class _MinhasCartasScreenState extends State<MinhasCartasScreen> {
             ),
           );
 
-          // 4. SE A TELA VOLTOU COM 'true' (carta abandonada),
-          //    ATUALIZAMOS A LISTA!
+          // 4. SE A TELA VOLTOU COM 'true' (carta abandonada)
           if (result == true) {
             _loadCards();
           }

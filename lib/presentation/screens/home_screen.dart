@@ -9,7 +9,6 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Puxa o tema de texto definido no seu M3 Theme
     final textTheme = Theme.of(context).textTheme;
 
     return Scaffold(

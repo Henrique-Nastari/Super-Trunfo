@@ -35,7 +35,7 @@ class DailyCardService {
       final String? lastDrawDate = prefs.getString(_dateKey);
 
       if (lastDrawDate == today) {
-        // --- JÁ RESGATOU HOJE ---
+        // JÁ RESGATOU HOJE
         print("Já resgatou o card de hoje. Buscando do cache...");
         final int? heroId = prefs.getInt(_heroIdKey);
 
@@ -54,26 +54,26 @@ class DailyCardService {
         return DailyCardResult(status: DailyCardStatus.alreadyClaimed, hero: hero);
 
       } else {
-        // --- NOVO DIA! SORTEAR NOVO HERÓI ---
+        // NOVO DIA. SORTEAR NOVO HERÓI
         print("Novo dia. Sorteando novo herói...");
         return _drawNewHero(prefs, today);
       }
     } catch (e) {
       return DailyCardResult(
-        status: DailyCardStatus.alreadyClaimed, // Para não mostrar o botão
+        status: DailyCardStatus.alreadyClaimed,
         message: "Erro: $e. Tente novamente mais tarde.",
       );
     }
   }
 
-  /// Lógica interna para sortear um novo herói
+  /// sortear um novo herói
   Future<DailyCardResult> _drawNewHero(SharedPreferences prefs, String today) async {
     // 1. Buscar todos os heróis do cache
     final List<Hero> allHeroes = await _heroRepository.getHeroesFromCache();
 
     if (allHeroes.isEmpty) {
       return DailyCardResult(
-        status: DailyCardStatus.alreadyClaimed, // Bloqueia o botão
+        status: DailyCardStatus.alreadyClaimed,
         message: "Erro: A sua cache de heróis está vazia. Por favor, visite a tela 'Heróis' primeiro para carregar os dados.",
       );
     }

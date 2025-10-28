@@ -3,7 +3,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:super_trunfo/data/models/hero.dart';
 import 'package:super_trunfo/data/repositories/my_cards_repository.dart';
 
-// 1. (NOVO) Enum para sabermos qual botão foi pressionado
+// 1. Enum para sabermos qual botão foi pressionado
 enum RoundResult { win, draw, loss }
 
 class BatalharScreen extends StatefulWidget {
@@ -21,7 +21,7 @@ class _BatalharScreenState extends State<BatalharScreen> {
   int _currentIndex = 0;
   bool _isGameOver = false;
 
-  // 2. (NOVO) Variáveis de Placar
+  // 2. Variáveis de Placar
   int _playerWins = 0;
   int _playerDraws = 0;
   int _playerLosses = 0;
@@ -39,7 +39,7 @@ class _BatalharScreenState extends State<BatalharScreen> {
     return myCards;
   }
 
-  // 3. (ATUALIZADO) Lógica que registra o resultado da rodada
+  // 3. Lógica que registra o resultado da rodada
   void _recordRound(RoundResult result) {
     setState(() {
       // 3a. Incrementa o placar
@@ -73,7 +73,6 @@ class _BatalharScreenState extends State<BatalharScreen> {
       body: FutureBuilder<List<Hero>>(
         future: _deckFuture,
         builder: (context, snapshot) {
-          // --- (Estados de Carregando e Erro - Iguais) ---
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
           }
@@ -90,7 +89,7 @@ class _BatalharScreenState extends State<BatalharScreen> {
             );
           }
 
-          // 4. (ATUALIZADO) Tela de Fim de Jogo
+          // 4. Tela de Fim de Jogo
           if (_isGameOver) {
             return _buildGameOverScreen(); // Chama o novo widget de Fim de Jogo
           }
@@ -104,7 +103,7 @@ class _BatalharScreenState extends State<BatalharScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                // 5. (NOVO) Placar atual
+                // 5. Placar atual
                 Text(
                   "Placar: V $_playerWins | E $_playerDraws | D $_playerLosses",
                   textAlign: TextAlign.center,
@@ -125,7 +124,7 @@ class _BatalharScreenState extends State<BatalharScreen> {
 
                 const SizedBox(height: 24),
 
-                // 6. (ATUALIZADO) Botões de resultado
+                // 6. Botões de resultado
                 _buildButtonRow(),
               ],
             ),
@@ -135,9 +134,7 @@ class _BatalharScreenState extends State<BatalharScreen> {
     );
   }
 
-  // --- Widgets Auxiliares ---
-
-  /// 7. (NOVO) Constói a linha de botões
+  /// 7. Constói a linha de botões
   Widget _buildButtonRow() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -167,9 +164,8 @@ class _BatalharScreenState extends State<BatalharScreen> {
     );
   }
 
-  /// 8. (NOVO) Constói a tela de Fim de Jogo
+  /// 8. Constói a tela de Fim de Jogo e calcula o resultado final
   Widget _buildGameOverScreen() {
-    // Calcula o resultado final
     String title;
     String subtitle;
     Color color;
@@ -225,7 +221,7 @@ class _BatalharScreenState extends State<BatalharScreen> {
     );
   }
 
-  /// Constroi o Card do Super Trunfo (Idêntico ao anterior)
+  /// Constroi o Card do Super Trunfo
   Widget _buildHeroCard(Hero hero, BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
     return Card(
@@ -269,7 +265,7 @@ class _BatalharScreenState extends State<BatalharScreen> {
     );
   }
 
-  /// Constroi uma linha de stat (Idêntico ao anterior)
+  /// Constroi uma linha de stat
   Widget _buildStatRow(String name, int value) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 6.0, horizontal: 8.0),

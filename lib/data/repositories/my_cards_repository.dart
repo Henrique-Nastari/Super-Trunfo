@@ -1,9 +1,7 @@
 import 'package:hive/hive.dart';
-// Lembre-se de trocar 'super_trunfo' se o nome do seu pacote for outro
 import 'package:super_trunfo/data/models/hero.dart';
 
 class MyCardsRepository {
-  // Um nome de "caixa" diferente para as cartas do utilizador
   final String _boxName = "myCardsBox";
 
   /// Adiciona um herói à caixa "Minhas Cartas".
@@ -47,13 +45,11 @@ class MyCardsRepository {
     }
   }
 
-  // --- ⭐️ NOVO MÉTODO ADICIONADO AQUI ⭐️ ---
-
   /// Remove um herói específico da "myCardsBox" usando o ID.
   Future<void> removeCard(int heroId) async {
     try {
       final box = await Hive.openBox<Hero>(_boxName);
-      // O método .delete() do Hive remove o item pela chave
+      // O metodo .delete() do Hive remove o item pela chave
       await box.delete(heroId);
     } catch (e) {
       print("Erro ao remover carta $heroId do 'myCardsBox': $e");

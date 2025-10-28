@@ -138,7 +138,7 @@ class HeroDetailScreen extends StatelessWidget {
     );
   }
 
-  /// Widget auxiliar para exibir UMA barra de stat
+  /// Widget auxiliar para exibir uma barra de stat
   Widget _buildStatRow(String name, int value) {
     final Color color;
     if (value < 40) {
@@ -158,9 +158,7 @@ class HeroDetailScreen extends StatelessWidget {
           const SizedBox(height: 6),
           PrimerProgressBar(
             segments: [
-              // 1ª CORREÇÃO: Removido .toDouble()
               Segment(value: value, color: color),
-              // 2ª CORREÇÃO: Removido .toDouble()
               Segment(value: 100 - value, color: Colors.grey.shade300),
             ],
           ),

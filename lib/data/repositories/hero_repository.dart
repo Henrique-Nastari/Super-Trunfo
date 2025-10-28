@@ -3,19 +3,16 @@ import 'dart:math';
 import 'package:http/http.dart' as http;
 import 'package:hive/hive.dart';
 import 'package:super_trunfo/data/models/hero.dart';
-// 1. (NOVO) Precisamos do SharedPreferences para saber se já baixamos tudo
 import 'package:shared_preferences/shared_preferences.dart';
 
 class HeroRepository {
   // ATENÇÃO: Verifique o IP (10.0.2.2 ou o IP do seu PC)
   final String _baseUrl = "http://10.0.2.2:3000/heroes";
   final String _hiveBoxName = "heroesBox";
-  // (NOVO) Chave para o SharedPreferences
   static const String _syncFlagKey = 'hasFullHeroCache';
 
-  /// 2. (NOVO) MÉTODO PRINCIPAL
+  /// 2. METODO PRINCIPAL
   /// Garante que o cache do Hive esteja cheio com TODOS os heróis.
-  /// Só roda o download da API uma vez.
   Future<void> _syncAllHeroesToCache() async {
     final prefs = await SharedPreferences.getInstance();
     final bool hasFullCache = prefs.getBool(_syncFlagKey) ?? false;
@@ -26,9 +23,9 @@ class HeroRepository {
       return;
     }
 
-    print("Cache completo não encontrado. Baixando TODOS os heróis da API...");
+    print("Cache completo não encontrado. Baixando todos os heróis da API...");
     try {
-      // 3. (NOVO) Chamamos a API SEM paginação
+      // 3. Chamamos a API SEM paginação
       final response = await http.get(Uri.parse(_baseUrl));
 
       if (response.statusCode == 200) {
@@ -38,7 +35,7 @@ class HeroRepository {
 
         dynamic jsonData = jsonDecode(response.body);
 
-        // 4. (NOVO) SUPER CORREÇÃO: Verificamos se o JSON veio como [ [...] ]
+        // 4. SUPER CORREÇÃO: Verificamos se o JSON veio como [ [...] ]
         if (jsonData is List && jsonData.isNotEmpty && jsonData[0] is List) {
           print("Detectado 'array dentro de array'. Corrigindo...");
           jsonData = jsonData[0]; // Extraímos o array interno
@@ -50,10 +47,10 @@ class HeroRepository {
 
         final List<Hero> heroes = jsonData.map((data) => Hero.fromJson(data)).toList();
 
-        // 5. (NOVO) Salvamos TODOS os 700+ heróis no cache
+        // 5. Salvamos todos os 700+ heróis no cache
         await _saveHeroesToCache(heroes);
 
-        // 6. (NOVO) Marcamos no SharedPreferences que o download foi feito
+        // 6. Marcamos no SharedPreferences que o download foi feito
         await prefs.setBool(_syncFlagKey, true);
         print("Sync de ${heroes.length} heróis concluído.");
 
@@ -69,16 +66,16 @@ class HeroRepository {
     }
   }
 
-  /// 7. (ATUALIZADO) getHeroesPage agora é o "chefe"
+  /// 7. getHeroesPage agora é o "chefe"
   /// Ele garante que o sync aconteceu e DEPOIS pagina do cache.
   Future<List<Hero>> getHeroesPage(int page, int limit) async {
     try {
-      // 8. (NOVO) Na primeira página, garantimos que o cache está cheio
+      // 8. Na primeira página, garantimos que o cache está cheio
       if (page == 1) {
         await _syncAllHeroesToCache();
       }
 
-      // 9. (NOVO) Agora, lemos do cache de forma paginada
+      // 9. Agora, lemos do cache de forma paginada
       return _getHeroesFromCachePaginated(page, limit);
 
     } catch (e) {
@@ -88,7 +85,7 @@ class HeroRepository {
     }
   }
 
-  /// 10. (NOVO) Este método pagina os dados do CACHE
+  /// 10. Este metodo pagina os dados do CACHE
   Future<List<Hero>> _getHeroesFromCachePaginated(int page, int limit) async {
     final box = await Hive.openBox<Hero>(_hiveBoxName);
     final allHeroes = box.values.toList();
@@ -107,8 +104,6 @@ class HeroRepository {
     return allHeroes.sublist(startIndex, endIndex);
   }
 
-  // --- MÉTODOS ANTIGOS QUE AINDA USAMOS ---
-
   /// Salva uma lista de heróis no Box do Hive (sobrescreve)
   Future<void> _saveHeroesToCache(List<Hero> heroes) async {
     final box = await Hive.openBox<Hero>(_hiveBoxName);
@@ -118,7 +113,7 @@ class HeroRepository {
     await box.putAll(heroMap);
   }
 
-  /// Lê TODOS os heróis salvos no Box do Hive (para CPU e Card Diário)
+  /// Lê todos os heróis salvos no Box do Hive (para CPU e Card Diário)
   Future<List<Hero>> getHeroesFromCache() async {
     final box = await Hive.openBox<Hero>(_hiveBoxName);
     return box.values.toList();

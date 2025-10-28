@@ -1,12 +1,8 @@
 import 'package:flutter/material.dart' hide Hero;
 import 'package:super_trunfo/data/models/hero.dart';
 import 'package:super_trunfo/data/repositories/hero_repository.dart';
-
-// Imports das bibliotecas
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-
-// Import da nova tela de Detalhes
 import 'package:super_trunfo/presentation/screens/hero_detail_screen.dart';
 
 class HeroisScreen extends StatefulWidget {
@@ -66,7 +62,6 @@ class _HeroisScreenState extends State<HeroisScreen> {
             ),
             trailing: const Icon(Icons.arrow_forward_ios),
             onTap: () {
-              // AÇÃO DE NAVEGAÇÃO
               Navigator.push(
                 context,
                 MaterialPageRoute(

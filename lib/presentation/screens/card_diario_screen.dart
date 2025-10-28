@@ -92,12 +92,8 @@ class _CardDiarioScreenState extends State<CardDiarioScreen> {
 
                 // O CARD DO HERÓI
                 _buildHeroCard(hero, context),
-
-                const Spacer(), // Empurra o botão para baixo
-
-                // O BOTÃO E AS MENSAGENS DE FEEDBACK
+                const Spacer(),
                 _buildButtonArea(result),
-
                 const SizedBox(height: 20),
               ],
             ),
@@ -129,7 +125,6 @@ class _CardDiarioScreenState extends State<CardDiarioScreen> {
         padding: const EdgeInsets.symmetric(vertical: 16.0),
         textStyle: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
       ),
-      // Desativa o botão enquanto estiver a adicionar
       onPressed: _isAdding ? null : () => _onAddCard(result.hero!),
       child: _isAdding
           ? const SizedBox(height: 24, width: 24, child: CircularProgressIndicator(color: Colors.white, strokeWidth: 3))
@@ -137,19 +132,19 @@ class _CardDiarioScreenState extends State<CardDiarioScreen> {
     );
   }
 
-  /// Constroi o Card do Super Trunfo (requisito)
+  /// Constroi o Card do Super Trunfo
   Widget _buildHeroCard(Hero hero, BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
 
     return Card(
       elevation: 4,
-      clipBehavior: Clip.antiAlias, // Para a imagem não vazar das bordas
+      clipBehavior: Clip.antiAlias,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           // 1. IMAGEM
           CachedNetworkImage(
-            imageUrl: hero.images.md, // Imagem média
+            imageUrl: hero.images.md,
             height: 250,
             fit: BoxFit.cover,
             placeholder: (context, url) => const Center(child: CircularProgressIndicator()),
@@ -185,7 +180,7 @@ class _CardDiarioScreenState extends State<CardDiarioScreen> {
     );
   }
 
-  /// Constroi uma linha de stat (Ex: "Força: 100")
+  /// Constroi uma linha de stat
   Widget _buildStatRow(String name, int value) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 8.0),
