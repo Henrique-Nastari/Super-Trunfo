@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart' hide Hero;
 import 'package:super_trunfo/data/models/hero.dart';
 import 'package:super_trunfo/data/repositories/hero_repository.dart';
+
+// Imports das bibliotecas
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+
+// Import da nova tela de Detalhes
+import 'package:super_trunfo/presentation/screens/hero_detail_screen.dart';
 
 class HeroisScreen extends StatefulWidget {
   const HeroisScreen({super.key});
@@ -15,7 +20,6 @@ class _HeroisScreenState extends State<HeroisScreen> {
   static const _pageSize = 20;
   final HeroRepository _repository = HeroRepository();
 
-  // Agora 'Hero' refere-se unambiguously ao seu modelo
   final PagingController<int, Hero> _pagingController =
   PagingController(firstPageKey: 1);
 
@@ -29,7 +33,6 @@ class _HeroisScreenState extends State<HeroisScreen> {
 
   Future<void> _fetchPage(int pageKey) async {
     try {
-      // 'newItems' será 'List<Hero>' (do seu modelo)
       final newItems = await _repository.getHeroesPage(pageKey, _pageSize);
 
       final isLastPage = newItems.length < _pageSize;
@@ -50,39 +53,37 @@ class _HeroisScreenState extends State<HeroisScreen> {
       appBar: AppBar(
         title: const Text('Heróis'),
       ),
-      // 'Hero' aqui também é o seu modelo
       body: PagedListView<int, Hero>(
         pagingController: _pagingController,
         builderDelegate: PagedChildBuilderDelegate<Hero>(
           itemBuilder: (context, hero, index) => ListTile(
             leading: CircleAvatar(
-              // hero.images.sm (agora funciona)
               backgroundImage: CachedNetworkImageProvider(hero.images.sm),
             ),
-            // hero.name (agora funciona)
             title: Text(hero.name),
             subtitle: Text(
-              // hero.appearance.race (agora funciona)
-              // (Removi o '?? N/A' porque seu modelo define 'race' como não-nulo)
               '${hero.appearance.race} | Poder: ${hero.powerstats.power}',
             ),
             trailing: const Icon(Icons.arrow_forward_ios),
             onTap: () {
-              // TODO: Navegar para a tela de Detalhes do Herói
-              // hero.name (agora funciona)
-              print('Selecionou ${hero.name}');
+              // AÇÃO DE NAVEGAÇÃO
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => HeroDetailScreen(hero: hero),
+                ),
+              );
             },
           ),
 
+          // Widgets de feedback
           firstPageProgressIndicatorBuilder: (context) =>
           const Center(child: CircularProgressIndicator()),
-
           newPageProgressIndicatorBuilder: (context) => const Center(
               child: Padding(
                 padding: EdgeInsets.all(16.0),
                 child: CircularProgressIndicator(strokeWidth: 2),
               )),
-
           firstPageErrorIndicatorBuilder: (context) => Center(
             child: Text('Erro ao carregar heróis: ${_pagingController.error}'),
           ),
